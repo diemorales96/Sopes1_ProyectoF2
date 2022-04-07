@@ -1,0 +1,30 @@
+[
+    {
+        "game_id": 2,
+        "players": 53
+    },
+    {
+        "game_id": 3,
+        "players": 38
+    },
+    {
+        "game_id": 1,
+        "players": 25
+    },
+    {
+        "game_id": 5,
+        "players": 20
+    },
+    {
+        "game_id": 4,
+        "players": 13
+    },
+    {
+        "game_id": 1,
+        "players": 2
+    },
+    {
+        "game_id": 5,
+        "players": 40
+    }
+]
