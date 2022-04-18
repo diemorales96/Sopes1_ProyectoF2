@@ -14,9 +14,6 @@ var packageDefinition = protoLoader.loadSync(PROTO_PATH, {
 });
 var juego_proto = grpc.loadPackageDefinition(packageDefinition).juego;
 
-/* Conexion a la base de datos */
-const mysqlConnection = require("./conn");
-
 function addLog(call, callback) {
   console.log("Request: ", call.request);
 
@@ -53,21 +50,6 @@ function addLog(call, callback) {
     callback(null, { message: "Caso insertado en la base de datos" });
   });
   */
-}
-
-function getLogs(call) {
-  const query =
-    "SELECT game_id, players, game_name, winner_number, queue FROM Game_Logs;";
-
-  mysqlConnection.query(query, function (err, rows, fields) {
-    if (err) throw err;
-    //console.log(rows.length)
-    for (const data of rows) {
-      //console.log(data);
-      call.write(data);
-    }
-    call.end();
-  });
 }
 
 function main() {

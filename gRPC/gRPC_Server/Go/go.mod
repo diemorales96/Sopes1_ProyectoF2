@@ -1,5 +1,4 @@
-module github.com/JPineda12/SO1_Fase2_G13
-
+module github.com/diemorales96/Sopes1_ProyectoF2
 go 1.17
 
 require (
