@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option go_package = "github.com/JPineda12/SO1_Fase2_G13";
+option go_package = "github.com/diemorales96/Sopes1_ProyectoF2/proto";
 
 package juego;
 

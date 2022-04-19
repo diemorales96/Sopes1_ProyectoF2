@@ -16,7 +16,28 @@ var juego_proto = grpc.loadPackageDefinition(packageDefinition).juego;
 
 function addLog(call, callback) {
   console.log("Request: ", call.request);
+  let data_game;
+  switch (call.request.game_id) {
+    case 1:
+      data_game = gameNumberOne(call.request.players);
+      break;
+    case 2:
+      data_game = gameNumberTwo(call.request.players);
 
+      break;
+    case 3:
+      data_game = gameNumberThree(call.request.players);
+
+      break;
+    case 4:
+      data_game = gameNumberFour(call.request.players);
+
+      break;
+    case 5:
+      data_game = gameNumberFive(call.request.players);
+      break;
+  }
+  console.log("data_game: " + data_game);
   amqp.connect(
     "amqp://guest:guest@35.184.181.185",
     function (error0, connection) {
@@ -35,9 +56,9 @@ function addLog(call, callback) {
         channel.publish(
           exchange,
           '',
-          Buffer.from(JSON.stringify(call.request))
+          Buffer.from(JSON.stringify(data_game))
         );
-        callback(null, { message: "Log enviado a rabbit sexual" });
+        callback(null, { message: "Log enviado a rabbit" });
       });
     }
   );
@@ -51,6 +72,62 @@ function addLog(call, callback) {
   });
   */
 }
+
+function gameNumberOne(players_quantity) {
+  return {
+    game_id: 1,
+    players: players_quantity,
+    game_name: "Uno",
+    winner_number: 3,
+    queue: "RabbitMQ"
+  };
+}
+function gameNumberTwo(players_quantity) {
+  return {
+    game_id: 2,
+    players: players_quantity,
+    game_name: "Dos",
+    winner_number: 4,
+    queue: "RabbitMQ"
+
+  };
+}
+function gameNumberThree(players_quantity) {
+  return {
+    game_id: 3,
+    players: players_quantity,
+    game_name: "Tres",
+    winner_number: 1,
+    queue: "RabbitMQ"
+  };
+}
+function gameNumberFour(players_quantity) {
+  return {
+    game_id: 4,
+    players: players_quantity,
+    game_name: "Cuatro",
+    winner_number: 2,
+    queue: "RabbitMQ"
+  };
+}
+function gameNumberFive(players_quantity) {
+  return {
+    game_id: 5,
+    players: players_quantity,
+    game_name: "Cinco",
+    winner_number: 13,
+    queue: "RabbitMQ"
+
+  };
+}
+
+
+
+
+
+
+
+
 
 function main() {
   var server = new grpc.Server();
