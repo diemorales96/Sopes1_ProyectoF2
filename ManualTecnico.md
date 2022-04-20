@@ -69,7 +69,7 @@ En nuestra aplicacion, se ejecuta locust y se hacen las pruebas hacia un balance
 
 gRPC Es un sistema de llamada a procedimiento remoto de código abierto desarrollado inicialmente en Google. Utiliza como transporte HTTP/2 y Protocol Buffers como lenguaje de descripción de interfaz.
 <p align="center"> 
-  <img align="center" width="200px" src="imgs/clientes_grpc.png" />
+  <img align="center" width="400px" src="imgs/clientes_grpc.png" />
 </p>
 El balanceador carga hace peticiones a dos clientes de gRPC alojados en un contenedor de docker en dos maquinas virtuales distintas. Cada contenedor actua como API y permite comunicarse con un cliente gRPC (implementado en Go y Node respectivamente) que hace peticion a un Servidor de gRPC. 
 <br>
