@@ -1,2 +1,22 @@
-# Sopes1_ProyectoF2
-Proyecto de sistemas operativos fase 2
+# SO1_Proyecto1_G13
+
+**UNIVERSIDAD DE SAN CARLOS DE GUATEMALA**<br>
+**FACULTAD DE INGENIERÍA**<br>
+**ESCUELA DE INGENIERÍA EN CIENCIAS Y SISTEMAS**<br>
+**SISTEMAS OPERATIVOS 1**<br>
+**SECCIÓN A**<br>
+
+<br>
+<br>
+<p align="center"> 
+  <img align="center" width="440px" src="imgs/logo_usac.svg" />
+</p>
+
+| Nombre                             | Carné     |
+|------------------------------------|-----------|
+| Juan Antonio Pineda Espino              | 201404405 |
+| Mechas :v | 222222|
+| Daniel Eduardo Lopez Alvarez | 201700390 |
+
+- ### [Manual Tecnico](ManualTecnico.md)
+- ### [Manual de Usuario](ManualUsuario.md)
