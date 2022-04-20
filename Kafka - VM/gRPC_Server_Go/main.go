@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"math/rand"
 	"net"
 	"os"
 
@@ -66,6 +67,7 @@ func (s *server) AddLog(ctx context.Context, in *pb.JuegoRequest) (*pb.RequestRe
 }
 
 func main() {
+
 	lis, err := net.Listen("tcp", ":50051")
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
@@ -79,50 +81,70 @@ func main() {
 }
 
 func gameNumberOne(prueba *pb.JuegoRequest) GameResult {
+	//var ganador int
+	ganador := rand.Intn(int(prueba.Players))
 	resultado := GameResult{}
 	resultado.Game_id = prueba.GameId
 	resultado.Players = prueba.Players
-	resultado.Game_name = "Uno"
-	resultado.Winner_number = 3
+	resultado.Game_name = "Random"
+	resultado.Winner_number = int32(ganador)
 	resultado.Queue = "Kafka"
 	return resultado
 }
 
 func gameNumberTwo(prueba *pb.JuegoRequest) GameResult {
+	ganador := int32(prueba.Players / 2)
 	resultado := GameResult{}
 	resultado.Game_id = prueba.GameId
 	resultado.Players = prueba.Players
-	resultado.Game_name = "Dos"
-	resultado.Winner_number = 8
+	resultado.Game_name = "Half Game"
+	resultado.Winner_number = ganador
 	resultado.Queue = "Kafka"
 	return resultado
 }
 
 func gameNumberThree(prueba *pb.JuegoRequest) GameResult {
+	ganador := prueba.Players
 	resultado := GameResult{}
 	resultado.Game_id = prueba.GameId
 	resultado.Players = prueba.Players
-	resultado.Game_name = "Tres"
-	resultado.Winner_number = 13
+	resultado.Game_name = "The Last One"
+	resultado.Winner_number = ganador
 	resultado.Queue = "Kafka"
 	return resultado
 }
 
 func gameNumberFour(prueba *pb.JuegoRequest) GameResult {
+	var ganador int
+	for {
+		ganador = rand.Intn(int(prueba.Players))
+		if (ganador)%2 == 0 {
+			break
+		}
+	}
+
 	resultado := GameResult{}
 	resultado.Game_id = prueba.GameId
 	resultado.Players = prueba.Players
-	resultado.Game_name = "Cuatro"
-	resultado.Winner_number = 43
+	resultado.Game_name = "Even Game"
+	resultado.Winner_number = int32(ganador)
 	resultado.Queue = "Kafka"
 	return resultado
 }
+
 func gameNumberFive(prueba *pb.JuegoRequest) GameResult {
+	var ganador int
+	for {
+		ganador = rand.Intn(int(prueba.Players))
+		if (ganador)%2 != 0 {
+			break
+		}
+	}
 	resultado := GameResult{}
 	resultado.Game_id = prueba.GameId
 	resultado.Players = prueba.Players
-	resultado.Game_name = "Cinco"
-	resultado.Winner_number = 23
+	resultado.Game_name = "Odd Game"
+	resultado.Winner_number = int32(ganador)
 	resultado.Queue = "Kafka"
 	return resultado
 }

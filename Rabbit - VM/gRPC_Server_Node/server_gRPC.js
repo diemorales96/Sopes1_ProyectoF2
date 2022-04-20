@@ -77,8 +77,8 @@ function gameNumberOne(players_quantity) {
   return {
     game_id: 1,
     players: players_quantity,
-    game_name: "Uno",
-    winner_number: 3,
+    game_name: "Random",
+    winner_number: Math.round(players_quantity),
     queue: "RabbitMQ"
   };
 }
@@ -86,8 +86,8 @@ function gameNumberTwo(players_quantity) {
   return {
     game_id: 2,
     players: players_quantity,
-    game_name: "Dos",
-    winner_number: 4,
+    game_name: "Half Game",
+    winner_number: players_quantity / 2,
     queue: "RabbitMQ"
 
   };
@@ -96,26 +96,41 @@ function gameNumberThree(players_quantity) {
   return {
     game_id: 3,
     players: players_quantity,
-    game_name: "Tres",
-    winner_number: 1,
+    game_name: "Thes Last One",
+    winner_number: players_quantity,
     queue: "RabbitMQ"
   };
 }
 function gameNumberFour(players_quantity) {
+  var ganador;
+  while (true) {
+    ganador = Math.round(players_quantity);
+    if(ganador % 2 == 0){
+      break;
+    }
+  }
   return {
+    
     game_id: 4,
     players: players_quantity,
-    game_name: "Cuatro",
-    winner_number: 2,
+    game_name: "Even Game",
+    winner_number: ganador,
     queue: "RabbitMQ"
   };
 }
 function gameNumberFive(players_quantity) {
+  var ganador;
+  while (true) {
+    ganador = Math.round(players_quantity);
+    if(ganador % 2 != 0){
+      break;
+    }
+  }
   return {
     game_id: 5,
     players: players_quantity,
-    game_name: "Cinco",
-    winner_number: 13,
+    game_name: "Odd Game",
+    winner_number: ganador,
     queue: "RabbitMQ"
 
   };
