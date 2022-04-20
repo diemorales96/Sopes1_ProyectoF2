@@ -10,13 +10,13 @@ import (
 
 	"github.com/gorilla/mux"
 
-	pb "github.com/racarlosdavid/demo-gRPC/proto"
+	pb "github.com/diemorales96/Sopes1_ProyectoF2/proto"
 	"google.golang.org/grpc"
 )
 
 type GameBody struct {
-	GameId  string `json:"game_id"`
-	Players string `json:"players"`
+	GameId  int32 `json:"game_id"`
+	Players int32 `json:"players"`
 }
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
@@ -32,7 +32,7 @@ func execGame(w http.ResponseWriter, r *http.Request) {
 	}
 	fmt.Println("Game Body: ", x)
 	/********************************** gRPC llamada al servidor ********************************/
-	conn, err := grpc.Dial("localhost:50051", grpc.WithInsecure(), grpc.WithBlock())
+	conn, err := grpc.Dial("35.184.181.185:50051", grpc.WithInsecure(), grpc.WithBlock())
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
 	}
@@ -41,9 +41,9 @@ func execGame(w http.ResponseWriter, r *http.Request) {
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
-	reply, err := c.addLog(ctx, &pb.JuegoRequest{
-		game_id: x.GameId,
-		players: x.Players,
+	reply, err := c.AddLog(ctx, &pb.JuegoRequest{
+		GameId:  x.GameId,
+		Players: x.Players,
 	})
 	if err != nil {
 		log.Fatalf("could not greet: %v", err)
@@ -61,7 +61,7 @@ func execGame(w http.ResponseWriter, r *http.Request) {
 func main() {
 	router := mux.NewRouter().StrictSlash(false)
 	router.HandleFunc("/", IndexHandler)
-	router.HandleFunc("/exec-game", execGame).Methods("POST")
+	router.HandleFunc("/api/exec-game", execGame).Methods("POST")
 	log.Println("Listening at port 2000")
 	log.Fatal(http.ListenAndServe(":2000", router))
 }

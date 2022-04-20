@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"log"
 	"net"
@@ -17,28 +18,17 @@ type server struct {
 	pb.UnimplementedJuegosServer
 }
 type GameResult struct {
-	Players       int32  `json:"players"`
 	Game_id       int32  `json:"game_id"`
+	Players       int32  `json:"players"`
 	Game_name     string `json:"game_name"`
-	Winner_number string `json:"winner_number"`
+	Winner_number int32  `json:"winner_number"`
 	Queue         string `json:"queue"`
 }
 
-const (
-	topic          = "message-log"
-	broker1Address = "localhost:9093"
-	broker2Address = "localhost:9094"
-	broker3Address = "localhost:9095"
-)
+var topic = "logs"
+var broker1Address = "34.148.239.51:9092"
 
-func failOnError(err error, msg string) {
-	if err != nil {
-		log.Fatalf("%s: %s", msg, err)
-	}
-}
-
-func (s *server) Exec_Games(ctx context.Context, in *pb.JuegoRequest) (GameResult, error) {
-
+func (s *server) AddLog(ctx context.Context, in *pb.JuegoRequest) (*pb.RequestReply, error) {
 	result := GameResult{}
 	if in.GetGameId() == 1 {
 		result = gameNumberOne(in)
@@ -53,17 +43,23 @@ func (s *server) Exec_Games(ctx context.Context, in *pb.JuegoRequest) (GameResul
 	}
 	// intialize the writer with the broker addresses, and the topic
 	p, err := kafka.NewProducer(&kafka.ConfigMap{
-		"bootstrap.servers": "host1:9092,host2:9092",
+		"bootstrap.servers": broker1Address,
 		"acks":              "all"})
 
 	if err != nil {
 		fmt.Printf("Failed to create producer: %s\n", err)
 		os.Exit(1)
 	}
+
+	msg, err2 := json.Marshal(result)
+	if err2 != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
 	delivery_chan := make(chan kafka.Event, 10000)
-	err = p.Produce(&kafka.Message{
-		TopicPartition: kafka.TopicPartition{Topic: topic, Partition: kafka.PartitionAny},
-		Value:          result},
+	_ = p.Produce(&kafka.Message{
+		TopicPartition: kafka.TopicPartition{Topic: &topic, Partition: kafka.PartitionAny},
+		Value:          msg},
 		delivery_chan,
 	)
 	return &pb.RequestReply{Message: "Log Enviado a Kafka"}, nil
@@ -76,7 +72,7 @@ func main() {
 	}
 	s := grpc.NewServer()
 	pb.RegisterJuegosServer(s, &server{})
-	log.Printf("server listening at %v", lis.Addr())
+	log.Printf("Server listening at %v", lis.Addr())
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
 	}
@@ -87,7 +83,7 @@ func gameNumberOne(prueba *pb.JuegoRequest) GameResult {
 	resultado.Game_id = prueba.GameId
 	resultado.Players = prueba.Players
 	resultado.Game_name = "Uno"
-	resultado.Winner_number = "3"
+	resultado.Winner_number = 3
 	resultado.Queue = "Kafka"
 	return resultado
 }
@@ -97,7 +93,7 @@ func gameNumberTwo(prueba *pb.JuegoRequest) GameResult {
 	resultado.Game_id = prueba.GameId
 	resultado.Players = prueba.Players
 	resultado.Game_name = "Dos"
-	resultado.Winner_number = "8"
+	resultado.Winner_number = 8
 	resultado.Queue = "Kafka"
 	return resultado
 }
@@ -107,7 +103,7 @@ func gameNumberThree(prueba *pb.JuegoRequest) GameResult {
 	resultado.Game_id = prueba.GameId
 	resultado.Players = prueba.Players
 	resultado.Game_name = "Tres"
-	resultado.Winner_number = "13"
+	resultado.Winner_number = 13
 	resultado.Queue = "Kafka"
 	return resultado
 }
@@ -117,7 +113,7 @@ func gameNumberFour(prueba *pb.JuegoRequest) GameResult {
 	resultado.Game_id = prueba.GameId
 	resultado.Players = prueba.Players
 	resultado.Game_name = "Cuatro"
-	resultado.Winner_number = "43"
+	resultado.Winner_number = 43
 	resultado.Queue = "Kafka"
 	return resultado
 }
@@ -126,7 +122,7 @@ func gameNumberFive(prueba *pb.JuegoRequest) GameResult {
 	resultado.Game_id = prueba.GameId
 	resultado.Players = prueba.Players
 	resultado.Game_name = "Cinco"
-	resultado.Winner_number = "23"
+	resultado.Winner_number = 23
 	resultado.Queue = "Kafka"
 	return resultado
 }

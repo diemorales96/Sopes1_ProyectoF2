@@ -133,7 +133,6 @@ function main() {
   var server = new grpc.Server();
   server.addService(juego_proto.Juegos.service, {
     addLog: addLog,
-    getLogs: getLogs,
   });
   server.bindAsync(
     "0.0.0.0:50051",

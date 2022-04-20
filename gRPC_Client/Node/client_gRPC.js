@@ -20,7 +20,7 @@ var target;
 if (argv.target) {
   target = argv.target;
 } else {
-  target = 'localhost:50051';
+  target = '34.148.239.51:50051';
 }
 var client = new juego_proto.Juegos(target,grpc.credentials.createInsecure());
 

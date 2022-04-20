@@ -1,0 +1,14 @@
+version: "3"
+services: 
+  kafka_subscriber: 
+    build: ./Kafka_Subscriber
+    container_name: kafka_subscriber
+    ports:
+      - "8080:8080"
+    restart: always
+  grpc_goserver: 
+    build: ./gRPC_Server_Go
+    container_name: grpc_goserver
+    ports:
+      - "50051:50051"
+    restart: always

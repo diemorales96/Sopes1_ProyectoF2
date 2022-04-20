@@ -1,0 +1,14 @@
+version: "3"
+services: 
+  rabbit_subscriber: 
+    build: ./rabbit-Sub
+    container_name: rabbit_subscriber
+    ports:
+      - "8080:8080"
+    restart: always
+  grpc_nodeserver: 
+    build: ./node-Server
+    container_name: grpc_nodeserver
+    ports:
+      - "50051:50051"
+    restart: always
