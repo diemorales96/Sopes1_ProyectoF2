@@ -15,7 +15,7 @@
 | Nombre                             | Carné     |
 |------------------------------------|-----------|
 | Juan Antonio Pineda Espino              | 201404405 |
-| Mechas :v | 222222|
+| Diego Manuel Morales Rabanales | 201503958|
 | Daniel Eduardo Lopez Alvarez | 201700390 |
 
 - ### [Manual Tecnico](ManualTecnico.md)
