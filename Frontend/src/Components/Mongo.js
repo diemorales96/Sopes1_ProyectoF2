@@ -11,7 +11,7 @@ class Pair {
   }
 }
 
-const baseUrl = "https://apirust8-4fgwmqspza-uc.a.run.app/get-all";
+const baseUrl = "https://apirust9-4fgwmqspza-uc.a.run.app/get-all";
 
 function Logs() {
   const [logs, setLogs] = useState([]);
