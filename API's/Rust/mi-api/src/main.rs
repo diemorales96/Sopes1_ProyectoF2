@@ -16,6 +16,7 @@ struct Date{
     pub game_name: String,
     pub winner_number: i32,
     pub queue: String,
+    pub request_number: i32
 }
 
 #[get("/hello/{name}")]
@@ -33,7 +34,7 @@ async fn get_logs()  -> impl Responder {
     let mut vec:Vec<Date> = Vec::new();
 
 
-    let client = Client::with_uri_str("mongodb://mongoadmin:hola123@34.66.127.53:27017/Fase2Sopes1?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false").unwrap();
+    let client = Client::with_uri_str("mongodb://mongoadmin:hola123@34.136.79.58:27017/Fase2Sopes1?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false").unwrap();
 
     let db = client.database("Fase2Sopes1");
     let coll= db.collection::<Date>("log");
